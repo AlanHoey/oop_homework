@@ -11,36 +11,42 @@ def display(data):
         print(f"\tGenre(s): {data[6]}")
 
 
-# try to read from file and display the contents
-try:
-    # Ask user to enter a filename
+attempts = 0
+while attempts < 5:
     filename = input("Please enter the inventory filename: ")
-    with open(filename, "r") as file_handle:
-        # Read content of file in and store in a list of content
-        for line in file_handle:
-            line = line.strip()
-            components = line.split("%%")
-            data = []
-            data.append(components[1])
-            data.append(components[2])
-            data.append(float(components[3]))
-            data.append(float(components[4]))
-            data.append(int(components[5]))
-            if components[0] == "Book":
-                data.append(components[6])
-                genres = components[7].split("&&")
-                data.append(genres)
+    try:
 
-            # Display data for this line
-            display(data)
+        with open(filename, "r") as file_handle:
+                # Read content of file in and store in a list of content
+                for line in file_handle:
+                    line = line.strip()
+                    components = line.split("%%")
+                    data = []
+                    data.append(components[1])
+                    data.append(components[2])
+                    data.append(float(components[3]))
+                    data.append(float(components[4]))
+                    data.append(int(components[5]))
+                    if components[0] == "Book":
+                        data.append(components[6])
+                        genres = components[7].split("&&")
+                        data.append(genres)
 
-except FileNotFoundError:
-    print(f"{filename} does not exist, ending program.")
+                    # Display data for this line
+                    display(data)
 
-except ValueError:
-    print("There is a numerical error in the file, ending program.")
 
-except IndexError:
-    print("There is a formatting error in the file, ending program.")
+    except FileNotFoundError:
+        attempts += 1
+        print(f"{filename} does not exist, {5-attempts} attempts left.")
 
-print("Program has ended.")
+        if attempts == 5:
+            print("Too many failed attempts, ending program.")
+
+    except ValueError:
+        print("There is a numerical error in the file, ending program.")
+
+    except IndexError:
+        print("There is a formatting error in the file, ending program.")
+
+    print("Program has ended.")
