@@ -11,23 +11,36 @@ def display(data):
         print(f"\tGenre(s): {data[6]}")
 
 
-# Ask user to enter a filename
-filename = input("Please enter the inventory filename: ")
-with open(filename, "r") as file_handle:
-    # Read content of file in and store in a list of content
-    for line in file_handle:
-        line = line.strip()
-        components = line.split("%%")
-        data = []
-        data.append(components[1])
-        data.append(components[2])
-        data.append(float(components[3]))
-        data.append(float(components[4]))
-        data.append(int(components[5]))
-        if components[0] == "Book":
-            data.append(components[6])
-            genres = components[7].split("&&")
-            data.append(genres)
+# try to read from file and display the contents
+try:
+    # Ask user to enter a filename
+    filename = input("Please enter the inventory filename: ")
+    with open(filename, "r") as file_handle:
+        # Read content of file in and store in a list of content
+        for line in file_handle:
+            line = line.strip()
+            components = line.split("%%")
+            data = []
+            data.append(components[1])
+            data.append(components[2])
+            data.append(float(components[3]))
+            data.append(float(components[4]))
+            data.append(int(components[5]))
+            if components[0] == "Book":
+                data.append(components[6])
+                genres = components[7].split("&&")
+                data.append(genres)
 
-        # Display data for this line
-        display(data)
+            # Display data for this line
+            display(data)
+
+except FileNotFoundError:
+    print(f"{filename} does not exist, ending program.")
+
+except ValueError:
+    print("There is a numerical error in the file, ending program.")
+
+except IndexError:
+    print("There is a formatting error in the file, ending program.")
+
+print("Program has ended.")
