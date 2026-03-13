@@ -62,7 +62,8 @@ class Student:
             return NotImplemented
         return self._student_id != other._student_id
 
-
+    def __repr__(self) -> str:
+        return f"{self.__class__.__name__}{{_student_id={self._student_id}, name={self._name}, subject_name={self._subject_name}, _grade={self.__grade}}}"
 
 
 
