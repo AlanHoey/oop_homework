@@ -57,6 +57,11 @@ class Student:
             return NotImplemented
         return self._student_id == other._student_id
 
+    def __ne__(self, other) -> bool:
+        if not isinstance(other, Student):
+            return NotImplemented
+        return self._student_id != other._student_id
+
 
 
 
