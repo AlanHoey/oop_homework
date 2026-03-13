@@ -1,3 +1,12 @@
+from __future__ import annotations
+
+class IDError(Exception):
+    pass
+
+class GradeError(ValueError):
+    pass
+
+
 class Student:
     '''
     Code for the student class goes here:
@@ -8,29 +17,35 @@ class Student:
     dict[subject name: grade]
     '''
 
-    def __init__(self, student_id: str, name: str, subject_name: str, grade: dict[str, int]):
+    def __init__(self, student_id: str, name: str, subject_name: str, grade: dict[str, int | float]):
         self._student_id = student_id
         self._name = name
         self._subject_name = subject_name
         self.__grade = grade
 
-    def validate_id(self, student_id) -> str:
+    @staticmethod
+    def validate_id(student_id) -> str:
         if not student_id:
             raise ValueError('Student ID is required')
 
         if student_id[:3].upper() != "D00":
-            raise ValueError("Student ID must start with D00")
+            raise IDError("Student ID must start with D00")
 
         return student_id.upper()
 
-    def validate_grade(self, grade) -> int:
-        if grade == "":
+    @staticmethod
+    def validate_grade(grade) -> int | float:
+        if grade is None:
             raise ValueError("Grade is required")
 
         if grade <= 0 or grade > 100:
             raise ValueError("Grade must be between 0 and 100")
 
         return grade
+
+
+
+
 
 
 
