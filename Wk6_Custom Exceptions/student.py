@@ -36,12 +36,23 @@ class Student:
     @staticmethod
     def validate_grade(grade) -> int | float:
         if grade is None:
-            raise ValueError("Grade is required")
+            raise GradeError("Grade is required")
 
         if grade <= 0 or grade > 100:
-            raise ValueError("Grade must be between 0 and 100")
+            raise GradeError("Grade must be between 0 and 100")
 
         return grade
+
+    def add_grade(self, subject_name: str, grade: int | float) -> bool:
+        valid = Student.validate_grade(grade)
+        subject = subject_name.strip()
+        if subject in self.__grade:
+            return False
+        self.__grade[subject] = valid
+        return True
+
+
+
 
 
 
