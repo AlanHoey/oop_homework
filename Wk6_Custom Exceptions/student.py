@@ -14,7 +14,7 @@ class Student:
         self._subject_name = subject_name
         self.__grade = grade
 
-    def validate_id(self, student_id):
+    def validate_id(self, student_id) -> str:
         if not student_id:
             raise ValueError('Student ID is required')
 
@@ -23,7 +23,17 @@ class Student:
 
         return student_id.upper()
 
-    def validate_grade(self, grade):
+    def validate_grade(self, grade) -> int:
+        if grade == "":
+            raise ValueError("Grade is required")
+
+        if grade <= 0 or grade > 100:
+            raise ValueError("Grade must be between 0 and 100")
+
+        return grade
+
+
+
 
 
 
