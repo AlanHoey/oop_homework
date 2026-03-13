@@ -26,7 +26,7 @@ class Student:
     @staticmethod
     def validate_id(student_id) -> str:
         if not student_id:
-            raise ValueError('Student ID is required')
+            raise IDError('Student ID is required')
 
         if student_id[:3].upper() != "D00":
             raise IDError("Student ID must start with D00")
@@ -64,6 +64,10 @@ class Student:
 
     def __repr__(self) -> str:
         return f"{self.__class__.__name__}{{_student_id={self._student_id}, name={self._name}, subject_name={self._subject_name}, _grade={self.__grade}}}"
+
+    def __str__(self) -> str:
+        subject, grade = self.__grade
+        return f"Student ID: {self._student_id}, Name: {self._name}, Subject: {subject}, Grade: {grade}"
 
 
 
